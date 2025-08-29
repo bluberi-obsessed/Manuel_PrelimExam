@@ -1,0 +1,39 @@
+- name: Prelim Playboo
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Python3 & Pip3
+      apt:
+        name: 
+          - python3.12 
+          - python3-pip
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install java Open-jdk
+      apt:
+        name: openjdk-21-jdk
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install MariaDB
+      apt:
+        name:
+          - mariadb-server-10.5
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Starting MariaDB Server
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Creating a User
+      user:
+        name: "{{ a }}"
+        password: "{{ b }}"
+        home: "{{ c }}"
+        uid: "{{ d }}"
+        shell: "{{ e }}"
